@@ -2,17 +2,23 @@
 const std = @import("std");
 const Io = std.Io;
 
-/// This is a documentation comment to explain the `printAnotherMessage` function below.
-///
-/// Accepting an `Io.Writer` instance is a handy way to write reusable code.
-pub fn printAnotherMessage(writer: *Io.Writer) Io.Writer.Error!void {
-    try writer.print("Run `zig build test` to run the tests.\n", .{});
+/// Prints heart rate zones for different running workouts
+pub fn print_running_heart_rate_zones(writer: *Io.Writer) Io.Writer.Error!void {
+    try writer.print("TODO: Calculate Heart Rate Zones", .{});
 }
 
-pub fn add(a: i32, b: i32) i32 {
-    return a + b;
+/// Calculates maximal heart rate using the Tanaka formula.
+/// max_heart_rate = 208 - (0.7 * age)
+pub fn maximal_heart_rate_calculate(age: u8) f32 {
+    const baseline: u8 = 208;
+    const declinator: f32 = 0.7;
+    return baseline - (declinator * age);
 }
 
-test "basic add functionality" {
-    try std.testing.expect(add(3, 7) == 10);
+test "basic maximal heart rate calculation" {
+    try std.testing.expect(maximal_heart_rate_calculate(25) == 190.5);
+    try std.testing.expect(maximal_heart_rate_calculate(35) == 183.5);
+    try std.testing.expect(maximal_heart_rate_calculate(45) == 176.5);
+    try std.testing.expect(maximal_heart_rate_calculate(55) == 169.5);
+    try std.testing.expect(maximal_heart_rate_calculate(65) == 162.5);
 }
