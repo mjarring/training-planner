@@ -3,7 +3,7 @@ const std = @import("std");
 const Io = std.Io;
 
 /// Prints heart rate zones for different running workouts
-pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u32, heart_rate_resting: u32) Io.Writer.Error!void {
+pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u8, heart_rate_resting: u32) Io.Writer.Error!void {
     try writer.print("VO2: XXX - XXX\n", .{});
     try writer.print("LT: xxx - xxx\n", .{});
     try writer.print("E: xxx - xxx\n", .{});

@@ -13,8 +13,8 @@ pub fn main(init: std.process.Init) !void {
     // Accessing command line arguments:
     var args_iterator = try init.minimal.args.iterateAllocator(arena);
     defer args_iterator.deinit();
-    var age: u32 = undefined;
-    var heart_rate_resting: u32 = undefined;
+    var age: u8 = undefined;
+    var heart_rate_resting: u8 = undefined;
     if (!args_iterator.skip()) {
         //TODO: Better Logging
         std.debug.print("Failed to skip program name arg\n", .{});
@@ -24,7 +24,7 @@ pub fn main(init: std.process.Init) !void {
         std.log.info("arg: {s}", .{arg});
         if (std.mem.eql(u8, "--age", arg)) {
             if (args_iterator.next()) |next_arg| {
-                age = std.fmt.parseInt(u32, next_arg, 10) catch |err| {
+                age = std.fmt.parseInt(u8, next_arg, 10) catch |err| {
                     //TODO: Better Logging
                     std.debug.print("Error parsing age: {}\n", .{err});
                     std.process.exit(1);
@@ -32,7 +32,7 @@ pub fn main(init: std.process.Init) !void {
             }
         } else if (std.mem.eql(u8, "--resting", arg)) {
             if (args_iterator.next()) |next_arg| {
-                heart_rate_resting = std.fmt.parseInt(u32, next_arg, 10) catch |err| {
+                heart_rate_resting = std.fmt.parseInt(u8, next_arg, 10) catch |err| {
                     //TODO: Better Logging
                     std.debug.print("Error parsing resting heart rate: {}\n", .{err});
                     std.process.exit(1);
