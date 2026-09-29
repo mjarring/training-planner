@@ -14,6 +14,7 @@ pub fn main(init: std.process.Init) !void {
     var args_iterator = try init.minimal.args.iterateAllocator(arena);
     defer args_iterator.deinit();
     var age: u32 = undefined;
+    var heart_rate_resting: u32 = undefined;
     if (!args_iterator.skip()) {
         //TODO: Better Logging
         std.debug.print("Failed to skip program name arg\n", .{});
@@ -29,6 +30,14 @@ pub fn main(init: std.process.Init) !void {
                     std.process.exit(1);
                 };
             }
+        } else if (std.mem.eql(u8, "--resting", arg)) {
+            if (args_iterator.next()) |next_arg| {
+                heart_rate_resting = std.fmt.parseInt(u32, next_arg, 10) catch |err| {
+                    //TODO: Better Logging
+                    std.debug.print("Error parsing resting heart rate: {}\n", .{err});
+                    std.process.exit(1);
+                };
+            }
         } else {
             // TODO: Better Logging
             std.debug.print("Unsupported argument\n", .{});
@@ -37,6 +46,7 @@ pub fn main(init: std.process.Init) !void {
     }
 
     std.log.info("age is {d}\n", .{age});
+    std.log.info("resting heart rate is {d}\n", .{heart_rate_resting});
 
     // In order to do I/O operations need an `Io` instance.
     const io = init.io;
@@ -48,7 +58,7 @@ pub fn main(init: std.process.Init) !void {
     var stdout_file_writer: Io.File.Writer = .init(.stdout(), io, &stdout_buffer);
     const stdout_writer = &stdout_file_writer.interface;
 
-    try training_planner.print_running_heart_rate_zones(stdout_writer);
+    try training_planner.print_running_heart_rate_zones(stdout_writer, age, heart_rate_resting);
 
     try stdout_writer.flush(); // Don't forget to flush!
 }
