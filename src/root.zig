@@ -7,18 +7,18 @@ pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u8, heart_rate_re
     const maximal_heart_rate = maximal_heart_rate_from_age(age);
     const reserve_heart_rate = reserve_heart_rate_from_maximal(maximal_heart_rate, heart_rate_resting);
 
-    const vo_two_upper = vo_two_max_heart_rate_reserve_upper(reserve_heart_rate);
-    const vo_two_lower = vo_two_max_heart_rate_reserve_lower(reserve_heart_rate);
-    const lactate_threshold_upper = lactate_threshold_heart_rate_reserve_upper(reserve_heart_rate);
-    const lactate_threshold_lower = lactate_threshold_heart_rate_reserve_lower(reserve_heart_rate);
-    const endurance_upper = endurance_heart_rate_reserve_upper(reserve_heart_rate);
-    const endurance_lower = endurance_heart_rate_reserve_lower(reserve_heart_rate);
-    const medium_long_upper = medium_long_heart_rate_reserve_upper(reserve_heart_rate);
-    const medium_long_lower = medium_long_heart_rate_reserve_lower(reserve_heart_rate);
-    const general_aerobic_upper = general_aerobic_heart_rate_reserve_upper(reserve_heart_rate);
-    const general_aerobic_lower = general_aerobic_heart_rate_reserve_lower(reserve_heart_rate);
-    const recovery_upper = recovery_heart_rate_reserve_upper(reserve_heart_rate);
-    const recovery_lower = recovery_heart_rate_reserve_lower(reserve_heart_rate);
+    const vo_two_upper = vo_two_max_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
+    const vo_two_lower = vo_two_max_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
+    const lactate_threshold_upper = lactate_threshold_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
+    const lactate_threshold_lower = lactate_threshold_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
+    const endurance_upper = endurance_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
+    const endurance_lower = endurance_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
+    const medium_long_upper = medium_long_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
+    const medium_long_lower = medium_long_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
+    const general_aerobic_upper = general_aerobic_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
+    const general_aerobic_lower = general_aerobic_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
+    const recovery_upper = recovery_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
+    const recovery_lower = recovery_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
 
     try writer.print("Heart Rate Reserve Values:\n", .{});
     try writer.print("VO2: {d:.0} - {d:.0}\n", .{ vo_two_upper, vo_two_lower });
