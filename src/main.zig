@@ -4,9 +4,6 @@ const Io = std.Io;
 const training_planner = @import("training_planner");
 
 pub fn main(init: std.process.Init) !void {
-    // Prints to stderr, unbuffered, ignoring potential errors.
-    std.debug.print("Welcome to Training Planner!\n", .{});
-
     // This is appropriate for anything that lives as long as the process.
     const arena: std.mem.Allocator = init.arena.allocator();
 

@@ -4,8 +4,12 @@ const Io = std.Io;
 
 /// Prints heart rate zones for different running workouts
 pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u8, heart_rate_resting: u8) Io.Writer.Error!void {
+    std.log.info("Inputs: Age {d}, Resting Heart Rate {d}\n", .{ age, heart_rate_resting });
+
     const maximal_heart_rate = maximal_heart_rate_from_age(age);
+    std.log.info("maximal_heart_rate is {d}\n", .{maximal_heart_rate});
     const reserve_heart_rate = reserve_heart_rate_from_maximal(maximal_heart_rate, heart_rate_resting);
+    std.log.info("reserve_heart_rate is {d}\n", .{reserve_heart_rate});
 
     // TODO: Adding heart_rate_resting should be part of the *_heart_rate_reserve_*() function
     const vo_two_upper = vo_two_max_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
@@ -28,7 +32,6 @@ pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u8, heart_rate_re
     try writer.print("ML: {d:.0} - {d:.0}\n", .{ medium_long_upper, medium_long_lower });
     try writer.print("GA: {d:.0} - {d:.0}\n", .{ general_aerobic_upper, general_aerobic_lower });
     try writer.print("R: {d:.0} - {d:.0}\n", .{ recovery_upper, recovery_lower });
-    try writer.print("Inputs: Age {d}, Resting Heart Rate {d}\n", .{ age, heart_rate_resting });
 }
 
 /// Calculates maximal heart rate using the Tanaka formula.
