@@ -9,8 +9,9 @@ const Workout = union(enum) {
     medium_long,
     general_aerobic,
     recovery,
-    fn heart_rate_reserve_upper(self: Workout, reserve_heart_rate: f32, resting_heart_rate: u8) f32 {
-        const reserve_upper_percentage: f32 = switch (self) {
+
+    fn reserve_upper_percentage(self: Workout) f32 {
+        return switch (self) {
             .vo_two_max => 0.97,
             .lactate_threshold => 0.88,
             .endurance => 0.78,
@@ -18,11 +19,10 @@ const Workout = union(enum) {
             .general_aerobic => 0.75,
             .recovery => 0.70,
         };
-        return reserve_upper_percentage * reserve_heart_rate + resting_heart_rate;
     }
 
-    fn heart_rate_reserve_lower(self: Workout, reserve_heart_rate: f32, resting_heart_rate: u8) f32 {
-        const reserve_lower_percentage: f32 = switch (self) {
+    fn reserve_lower_percentage(self: Workout) f32 {
+        return switch (self) {
             .vo_two_max => 0.92,
             .lactate_threshold => 0.75,
             .endurance => 0.65,
@@ -30,7 +30,14 @@ const Workout = union(enum) {
             .general_aerobic => 0.62,
             .recovery => 0.60,
         };
-        return reserve_lower_percentage * reserve_heart_rate + resting_heart_rate;
+    }
+
+    fn heart_rate_reserve_upper(self: Workout, reserve_heart_rate: f32, resting_heart_rate: u8) f32 {
+        return self.reserve_upper_percentage() * reserve_heart_rate + resting_heart_rate;
+    }
+
+    fn heart_rate_reserve_lower(self: Workout, reserve_heart_rate: f32, resting_heart_rate: u8) f32 {
+        return self.reserve_lower_percentage() * reserve_heart_rate + resting_heart_rate;
     }
 };
 
