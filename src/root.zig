@@ -25,6 +25,7 @@ pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u8, heart_rate_re
     const recovery_upper = recovery_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
     const recovery_lower = recovery_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
 
+    //TODO: Flip printout so it's <lower> - <higher>
     try writer.print("Heart Rate Reserve Values:\n", .{});
     try writer.print("VO2: {d:.0} - {d:.0}\n", .{ vo_two_upper, vo_two_lower });
     try writer.print("LT: {d:.0} - {d:.0}\n", .{ lactate_threshold_upper, lactate_threshold_lower });
