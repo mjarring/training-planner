@@ -60,8 +60,8 @@
         //    .lazy = false,
         //},
         .wayland = .{
-            .url = "git+https://codeberg.org/ifreund/zig-wayland.git#23839e41161de025d71ce082561ecba1c5331281",
-            .hash = "wayland-0.7.0-dev-lQa1kl38AQC-kQolS5D4jV1GJ2rH2jv1VWHr14YLVnyn",
+            .url = "git+https://codeberg.org/ifreund/zig-wayland.git#5c01e66af4bd2b3672250c31f1a8036a720eb078",
+            .hash = "wayland-0.7.0-dev-lQa1krf8AQDEncPPkLgIo8fq4kXqSRsGdG1haA2hPj_w",
         },
     },
     // Specifies the set of files and directories that are included in this package.
