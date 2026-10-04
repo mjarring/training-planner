@@ -25,14 +25,13 @@ pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u8, heart_rate_re
     const recovery_upper = recovery_heart_rate_reserve_upper(reserve_heart_rate) + heart_rate_resting;
     const recovery_lower = recovery_heart_rate_reserve_lower(reserve_heart_rate) + heart_rate_resting;
 
-    //TODO: Flip printout so it's <lower> - <higher>
     try writer.print("Heart Rate Reserve Values:\n", .{});
-    try writer.print("VO2: {d:.0} - {d:.0}\n", .{ vo_two_upper, vo_two_lower });
-    try writer.print("LT: {d:.0} - {d:.0}\n", .{ lactate_threshold_upper, lactate_threshold_lower });
-    try writer.print("E: {d:.0} - {d:.0}\n", .{ endurance_upper, endurance_lower });
-    try writer.print("ML: {d:.0} - {d:.0}\n", .{ medium_long_upper, medium_long_lower });
-    try writer.print("GA: {d:.0} - {d:.0}\n", .{ general_aerobic_upper, general_aerobic_lower });
-    try writer.print("R: {d:.0} - {d:.0}\n", .{ recovery_upper, recovery_lower });
+    try writer.print("VO2:\t{d:.0} - {d:.0}\n", .{ vo_two_lower, vo_two_upper });
+    try writer.print("LT:\t{d:.0} - {d:.0}\n", .{ lactate_threshold_lower, lactate_threshold_upper });
+    try writer.print("E:\t{d:.0} - {d:.0}\n", .{ endurance_lower, endurance_upper });
+    try writer.print("ML:\t{d:.0} - {d:.0}\n", .{ medium_long_lower, medium_long_upper });
+    try writer.print("GA:\t{d:.0} - {d:.0}\n", .{ general_aerobic_lower, general_aerobic_upper });
+    try writer.print("R:\t{d:.0} - {d:.0}\n", .{ recovery_lower, recovery_upper });
 }
 
 /// Calculates maximal heart rate using the Tanaka formula.
