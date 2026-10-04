@@ -2,7 +2,7 @@
 const std = @import("std");
 const Io = std.Io;
 
-const workout_type = enum(u8) {
+const WorkoutType = enum(u8) {
     vo_two_max,
     lactate_threshold,
     endurance,
@@ -11,12 +11,12 @@ const workout_type = enum(u8) {
     recovery,
 };
 
-const workout = struct {
-    type: workout_type,
+const Workout = struct {
+    type: WorkoutType,
     reserve_heart_rate: f32,
     resting_heart_rate: u8,
 
-    fn reserve_upper_percentage(self: workout) f32 {
+    fn reserve_upper_percentage(self: Workout) f32 {
         return switch (self.type) {
             .vo_two_max => 0.97,
             .lactate_threshold => 0.88,
@@ -27,7 +27,7 @@ const workout = struct {
         };
     }
 
-    fn reserve_lower_percentage(self: workout) f32 {
+    fn reserve_lower_percentage(self: Workout) f32 {
         return switch (self.type) {
             .vo_two_max => 0.92,
             .lactate_threshold => 0.75,
@@ -38,7 +38,7 @@ const workout = struct {
         };
     }
 
-    fn name(self: workout) []const u8 {
+    fn name(self: Workout) []const u8 {
         return switch (self.type) {
             .vo_two_max => "VO2",
             .lactate_threshold => "LT",
@@ -49,15 +49,15 @@ const workout = struct {
         };
     }
 
-    fn heart_rate_reserve_upper(self: workout) f32 {
+    fn heart_rate_reserve_upper(self: Workout) f32 {
         return self.reserve_upper_percentage() * self.reserve_heart_rate + self.resting_heart_rate;
     }
 
-    fn heart_rate_reserve_lower(self: workout) f32 {
+    fn heart_rate_reserve_lower(self: Workout) f32 {
         return self.reserve_lower_percentage() * self.reserve_heart_rate + self.resting_heart_rate;
     }
 
-    pub fn format(self: workout, writer: *Io.Writer) !void {
+    pub fn format(self: Workout, writer: *Io.Writer) !void {
         try writer.print("{s}:\t{d:.0} - {d:.0}", .{ self.name(), self.heart_rate_reserve_lower(), self.heart_rate_reserve_upper() });
     }
 };
@@ -71,12 +71,12 @@ pub fn print_running_heart_rate_zones(writer: *Io.Writer, age: u8, heart_rate_re
     const reserve_heart_rate = reserve_heart_rate_from_maximal(maximal_heart_rate, heart_rate_resting);
     std.log.info("reserve_heart_rate is {d}\n", .{reserve_heart_rate});
 
-    const vo_two: workout = .{ .type = .vo_two_max, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
-    const lactate_threshold: workout = .{ .type = .lactate_threshold, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
-    const endurance: workout = .{ .type = .endurance, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
-    const medium_long: workout = .{ .type = .medium_long, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
-    const general_aerobic: workout = .{ .type = .general_aerobic, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
-    const recovery: workout = .{ .type = .recovery, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
+    const vo_two: Workout = .{ .type = .vo_two_max, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
+    const lactate_threshold: Workout = .{ .type = .lactate_threshold, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
+    const endurance: Workout = .{ .type = .endurance, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
+    const medium_long: Workout = .{ .type = .medium_long, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
+    const general_aerobic: Workout = .{ .type = .general_aerobic, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
+    const recovery: Workout = .{ .type = .recovery, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = heart_rate_resting };
 
     try writer.print("Heart Rate Reserve Values:\n", .{});
     try writer.print("{f}\n", .{vo_two});
