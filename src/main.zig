@@ -106,7 +106,7 @@ pub fn main(init: std.process.Init) !void {
         .wm_base = null,
     };
 
-    registry.setListener(*Globals, registryListener, &globals);
+    registry.setListener(*Globals, wl_registry_listener, &globals);
     if (display.roundtrip() != .SUCCESS) return error.RoundtripFailed;
 
     const shm = globals.shm orelse return error.NoWlShm;
@@ -159,8 +159,8 @@ pub fn main(init: std.process.Init) !void {
     };
 
     wm_base.setListener(*State, wm_base_listener, &state);
-    xdg_surface.setListener(*State, xdgSurfaceListener, &state);
-    xdg_toplevel.setListener(*State, xdgToplevelListener, &state);
+    xdg_surface.setListener(*State, xdg_surface_listener, &state);
+    xdg_toplevel.setListener(*State, xdg_toplevel_listener, &state);
 
     surface.commit();
     while (!state.configured) {
@@ -175,7 +175,7 @@ pub fn main(init: std.process.Init) !void {
     }
 }
 
-fn registryListener(registry: *wl.Registry, event: wl.Registry.Event, globals: *Globals) void {
+fn wl_registry_listener(registry: *wl.Registry, event: wl.Registry.Event, globals: *Globals) void {
     switch (event) {
         .global => |global| {
             if (std.mem.orderZ(u8, global.interface, wl.Compositor.interface.name) == .eq) {
@@ -190,7 +190,7 @@ fn registryListener(registry: *wl.Registry, event: wl.Registry.Event, globals: *
     }
 }
 
-fn xdgSurfaceListener(xdg_surface: *xdg.Surface, event: xdg.Surface.Event, state: *State) void {
+fn xdg_surface_listener(xdg_surface: *xdg.Surface, event: xdg.Surface.Event, state: *State) void {
     switch (event) {
         .configure => |configure| {
             xdg_surface.ackConfigure(configure.serial);
@@ -200,7 +200,7 @@ fn xdgSurfaceListener(xdg_surface: *xdg.Surface, event: xdg.Surface.Event, state
     }
 }
 
-fn xdgToplevelListener(_: *xdg.Toplevel, event: xdg.Toplevel.Event, state: *State) void {
+fn xdg_toplevel_listener(_: *xdg.Toplevel, event: xdg.Toplevel.Event, state: *State) void {
     switch (event) {
         .configure => {},
         .close => state.running = false,
