@@ -1,8 +1,19 @@
 const std = @import("std");
 
+const Scanner = @import("wayland").Scanner;
+
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+
+    const scanner = Scanner.create(b, .{});
+    const wayland = b.createModule(.{ .root_source_file = scanner.result });
+
+    scanner.addSystemProtocol("stable/xdg-shell/xdg-shell.xml");
+
+    scanner.generate("wl_compositor", 1);
+    scanner.generate("wl_shm", 1);
+    scanner.generate("xdg_wm_base", 1);
 
     // This creates a module, which represents a collection of source files alongside
     // some compilation options, such as optimization mode and linked system libraries.
@@ -53,6 +64,9 @@ pub fn build(b: *std.Build) void {
             },
         }),
     });
+
+    exe.root_module.addImport("wayland", wayland);
+    exe.root_module.linkSystemLibrary("wayland-client", .{});
 
     // This declares intent for the executable to be installed into the
     // install prefix when running `zig build` (i.e. when executing the default
