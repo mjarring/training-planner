@@ -158,6 +158,7 @@ pub fn main(init: std.process.Init) !void {
         .running = true,
     };
 
+    wm_base.setListener(*State, wm_base_listener, &state);
     xdg_surface.setListener(*State, xdgSurfaceListener, &state);
     xdg_toplevel.setListener(*State, xdgToplevelListener, &state);
 
@@ -203,5 +204,13 @@ fn xdgToplevelListener(_: *xdg.Toplevel, event: xdg.Toplevel.Event, state: *Stat
     switch (event) {
         .configure => {},
         .close => state.running = false,
+    }
+}
+
+fn wm_base_listener(wm_base: *xdg.WmBase, event: xdg.WmBase.Event, _: *State) void {
+    switch (event) {
+        .ping => |ping| {
+            wm_base.pong(ping.serial);
+        },
     }
 }
