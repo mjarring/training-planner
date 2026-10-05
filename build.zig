@@ -1,13 +1,13 @@
 const std = @import("std");
 
-const Scanner = @import("wayland").Scanner;
+const Scanner = @import("zig_wayland").Scanner;
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
     const scanner = Scanner.create(b, .{});
-    const wayland = b.createModule(.{ .root_source_file = scanner.result });
+    const zig_wayland = b.createModule(.{ .root_source_file = scanner.result });
 
     scanner.addSystemProtocol("stable/xdg-shell/xdg-shell.xml");
 
@@ -65,7 +65,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    exe.root_module.addImport("wayland", wayland);
+    exe.root_module.addImport("zig_wayland", zig_wayland);
     exe.root_module.linkSystemLibrary("wayland-client", .{});
 
     // This declares intent for the executable to be installed into the

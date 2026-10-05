@@ -4,9 +4,9 @@ const Io = std.Io;
 const training_planner = @import("training_planner");
 const Workout = training_planner.Workout;
 
-const wayland = @import("wayland");
-const wl = wayland.client.wl;
-const xdg = wayland.client.xdg;
+const zig_wayland = @import("zig_wayland");
+const wl = zig_wayland.client.wl;
+const xdg = zig_wayland.client.xdg;
 
 const Globals = struct {
     shm: ?*wl.Shm,
