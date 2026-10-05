@@ -202,6 +202,7 @@ fn xdg_surface_listener(xdg_surface: *xdg.Surface, event: xdg.Surface.Event, sta
 
 fn xdg_toplevel_listener(_: *xdg.Toplevel, event: xdg.Toplevel.Event, state: *State) void {
     switch (event) {
+        // TODO: Handle configure and re-size buffer
         .configure => {},
         .close => state.running = false,
     }
