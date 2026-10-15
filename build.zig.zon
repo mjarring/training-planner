@@ -59,10 +59,6 @@
         //    // actually used.
         //    .lazy = false,
         //},
-        .zig_wayland = .{
-            .url = "git+https://codeberg.org/ifreund/zig-wayland.git#5c01e66af4bd2b3672250c31f1a8036a720eb078",
-            .hash = "wayland-0.7.0-dev-lQa1krf8AQDEncPPkLgIo8fq4kXqSRsGdG1haA2hPj_w",
-        },
     },
     // Specifies the set of files and directories that are included in this package.
     // Only files and directories listed here are included in the `hash` that
