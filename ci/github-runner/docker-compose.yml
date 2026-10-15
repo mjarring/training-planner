@@ -1,0 +1,13 @@
+services:
+  runner:
+    build: .
+    restart: unless-stopped
+    environment:
+      REPO: mjarring/training-planner
+      ACCESS_TOKEN: ${GH_PAT_TRAINING_PLANNER}
+      RUNNER_NAME: docker-runner
+      RUNNER_LABELS: github-runner
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
