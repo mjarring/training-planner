@@ -4,8 +4,6 @@ const Io = std.Io;
 const training_planner = @import("training_planner");
 const Workout = training_planner.Workout;
 
-const wayland = @import("wayland.zig");
-
 pub fn main(init: std.process.Init) !void {
     // This is appropriate for anything that lives as long as the process.
     const arena: std.mem.Allocator = init.arena.allocator();
@@ -79,6 +77,4 @@ pub fn main(init: std.process.Init) !void {
     try stdout_writer.print("{f}\n", .{recovery});
 
     try stdout_writer.flush(); // Don't forget to flush!
-
-    try wayland.wayland_init();
 }
