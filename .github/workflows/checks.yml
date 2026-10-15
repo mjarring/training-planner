@@ -1,4 +1,4 @@
-name: Pre-Commit-Check
+name: Continuous-Integration-Checks
 
 on:
   pull_request:
@@ -13,4 +13,6 @@ jobs:
     runs-on: [self-hosted, github-runner]
     steps:
       - uses: actions/checkout@v4
-      - run: pre-commit run --all-files --show-diff-on-failure
+      - run: nix develop --command pre-commit run --all-files --show-diff-on-failure
+      - run: nix develop --command zig version
+      - run: nix develop --command zig build
