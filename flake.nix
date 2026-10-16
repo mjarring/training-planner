@@ -20,7 +20,7 @@
       zig = zig-overlay.packages.${system};
       zls = zigtools-zls.packages.${system};
     in {
-      devShells.${system}.default = pkgs.mkShell {
+      devShells.${system}.default = pkgs.mkShellNoCC {
         packages = [ pkgs.pre-commit zig."0.17.0" zls.default ];
       };
     };
