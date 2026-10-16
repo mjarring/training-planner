@@ -27,5 +27,6 @@ Reinstall `pre-commit` with `nix develop -c pre-commit install` after updating n
 1. If updating to a new release of Zig, run `nix flake update zig-overlay`
 1. Bump the Zig environment by updating the `zig` attribute in
 `flake.nix`.
+1. Update the `zigtools-zls` SHA or tag to match the Zig release. Look for the correct `minimum_zig_version`.
 1. Update `minimum_zig_version` in `build.zig.zon` to match
 1. Check version with `nix develop -c zig version`
