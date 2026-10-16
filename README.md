@@ -33,3 +33,18 @@ file. Check the commit history to find a candidate commit.
 1. Run `nix flake lock` if either `zig` or `zigtools-zls` was updated.
 1. Update `minimum_zig_version` in `build.zig.zon` to match
 1. Check version with `nix develop -c zig version && zls --version && zig build test`
+
+### direnv (Optional)
+
+Use of `direnv` is optional. Use `direnv` to have the `flake.nix` environment
+applied automatically when `cd`-ing into the repo directory.
+
+Setup with these steps:
+
+1. Install with `nix-env -iA nixpkgs.direnv nixpkgs.nix-direnv`
+2. Add this line to `~/.bashrc`: `command -v direnv >/dev/null && eval "$(direnv hook bash)"`
+3. Add this line to `~/.config/direnv/direnvrc`: `source /home/mja/.nix-profile/share/nix-direnv/direnvrc`
+
+`direnv` will only take effect at the next prompt and won't apply inside scripts.
+
+Neovim must be started from inside the repo to get the environment provided by `direnv`.
