@@ -1,4 +1,4 @@
-name: Pre-Commit-Check
+name: Continuous-Integration-Checks
 
 on:
   pull_request:
@@ -7,10 +7,12 @@ permissions:
   contents: read
 
 jobs:
-  pre-commit:
+  continuous-integration-checks:
     # Only run on PRs from this repo, never from forks
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, github-runner]
     steps:
       - uses: actions/checkout@v4
-      - run: pre-commit run --all-files --show-diff-on-failure
+      - run: nix develop --command pre-commit run --all-files --show-diff-on-failure
+      - run: nix develop --command zig version
+      - run: nix develop --command zig build test

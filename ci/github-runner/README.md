@@ -7,7 +7,7 @@ GitHub Actions runner in a Docker container.
 
 | File | Purpose |
 | --- | --- |
-| `Dockerfile` | Builds on `ghcr.io/actions/actions-runner` (GitHub's official image) and adds `git`, and `pre-commit` |
+| `Dockerfile` | Builds on `ghcr.io/actions/actions-runner` (GitHub's official image) and installs Nix |
 | `entrypoint.sh` | Exchanges the PAT for a short-lived registration token, registers an ephemeral runner, then starts it |
 | `docker-compose.yml` | Defines the runner service (restart policy, dropped capabilities, no-new-privileges) |
 | `start.sh` | Helper script to start, stop and inspect the runner from your PC |
