@@ -8,7 +8,7 @@ same flake through `nix develop`.
 ### Installing Nix
 
 Install nix through normal means. Make sure to enable flakes by
-adding the following to `~/.config/nix/nix.conf` :
+adding the following to `~/.config/nix/nix.conf`:
 `experimental-features = nix-command flakes`.
 
 Check that the installer puts its setup in `~/.bashrc` and not `~/.bash_profile`.
