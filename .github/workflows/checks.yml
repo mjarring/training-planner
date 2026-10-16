@@ -15,4 +15,4 @@ jobs:
       - uses: actions/checkout@v4
       - run: nix develop --command pre-commit run --all-files --show-diff-on-failure
       - run: nix develop --command zig version
-      - run: nix develop --command zig build
+      - run: nix develop --command zig build test
