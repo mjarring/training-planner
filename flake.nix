@@ -15,13 +15,18 @@
 
   outputs = { self, nixpkgs, zig-overlay, zigtools-zls }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      zig = zig-overlay.packages.${system};
-      zls = zigtools-zls.packages.${system};
+      perPlatform = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ];
     in {
-      devShells.${system}.default = pkgs.mkShellNoCC {
-        packages = [ pkgs.pre-commit zig."0.17.0" zls.default ];
-      };
+      devShells = perPlatform (sys:
+        let
+          pkgs = nixpkgs.legacyPackages.${sys};
+          zig = zig-overlay.packages.${sys};
+          zls = zigtools-zls.packages.${sys};
+        in {
+          default = pkgs.mkShellNoCC {
+            packages = [ pkgs.pre-commit zig."0.17.0" zls.default ];
+          };
+        }
+      );
     };
 }
