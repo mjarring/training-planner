@@ -1,15 +1,15 @@
 const Io = @import("std").Io;
 
-pub const WorkoutType = enum(u8) {
-    vo_two_max,
-    lactate_threshold,
-    endurance,
-    medium_long,
-    general_aerobic,
-    recovery,
-};
-
 pub const Workout = struct {
+    pub const WorkoutType = enum(u8) {
+        vo_two_max,
+        lactate_threshold,
+        endurance,
+        medium_long,
+        general_aerobic,
+        recovery,
+    };
+
     type: WorkoutType,
     reserve_heart_rate: f32,
     resting_heart_rate: u8,
