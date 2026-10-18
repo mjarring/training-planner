@@ -5,14 +5,14 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     const mod = b.addModule("training_planner", .{
-        .root_source_file = b.path("src/root.zig"),
+        .root_source_file = b.path("src/training_planner.zig"),
         .target = target,
     });
 
     const exe = b.addExecutable(.{
-        .name = "training_planner",
+        .name = "training_planner_cli",
         .root_module = b.createModule(.{
-            .root_source_file = b.path("src/main.zig"),
+            .root_source_file = b.path("src/main_cli.zig"),
             .target = target,
             .optimize = optimize,
             .imports = &.{
