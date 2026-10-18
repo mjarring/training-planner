@@ -1,5 +1,5 @@
 const std = @import("std");
-pub const Workout = @import("workout.zig").Workout;
+pub const Workout = @import("workout.zig");
 
 /// Calculates maximal heart rate using the Tanaka formula.
 /// max_heart_rate = 208 - (0.7 * age)
