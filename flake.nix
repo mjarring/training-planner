@@ -22,9 +22,17 @@
           pkgs = nixpkgs.legacyPackages.${sys};
           zig = zig-overlay.packages.${sys};
           zls = zigtools-zls.packages.${sys};
+          linuxOnlyPackages = pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.kcov ];
         in {
           default = pkgs.mkShellNoCC {
-            packages = [ pkgs.pre-commit zig."0.17.0" zls.default pkgs.kcov ];
+            packages = [ pkgs.pre-commit zig."0.17.0" zls.default ] ++ linuxOnlyPackages;
+
+            shellHook = ''
+              if ! command -v kcov > /dev/null 2>&1; then
+                echo "Nix unable to find kcov for this host platform." >&2
+                echo "On macOS, install kcov with Homebrew." >&2
+              fi
+            '';
           };
         }
       );
