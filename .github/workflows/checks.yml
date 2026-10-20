@@ -16,3 +16,10 @@ jobs:
       - run: nix develop --command pre-commit run --all-files --show-diff-on-failure
       - run: nix develop --command zig version
       - run: nix develop --command zig build test
+      - run: nix develop --command zig build coverage
+      - run: nix develop --command jq -r '"kcov reports \(.percent_covered)% coverage."' zig-out/coverage/test.*/coverage.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kcov-coverage-report
+          path: zig-out/coverage
+          if-no-files-found: error
