@@ -24,7 +24,7 @@
           zls = zigtools-zls.packages.${sys};
         in {
           default = pkgs.mkShellNoCC {
-            packages = [ pkgs.pre-commit zig."0.17.0" zls.default ];
+            packages = [ pkgs.pre-commit zig."0.17.0" zls.default pkgs.kcov ];
           };
         }
       );
