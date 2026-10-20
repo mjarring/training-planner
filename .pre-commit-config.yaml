@@ -12,3 +12,10 @@ repos:
     -   id: check-merge-conflict
     -   id: check-symlinks
     -   id: mixed-line-ending
+-   repo: local
+    hooks:
+    -   id: zig-fmt
+        name: zig-fmt
+        entry: zig fmt
+        language: unsupported
+        types: [file, zig]
