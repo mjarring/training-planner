@@ -1,6 +1,7 @@
 const Workout = @This();
 
-const Io = @import("std").Io;
+const std = @import("std");
+const Io = std.Io;
 
 pub const WorkoutType = enum(u8) {
     vo_two_max,
@@ -58,4 +59,20 @@ fn heart_rate_reserve_lower(self: Workout) f32 {
 
 pub fn format(self: Workout, writer: *Io.Writer) !void {
     try writer.print("{s}:\t{d:.0} - {d:.0}", .{ self.name(), self.heart_rate_reserve_lower(), self.heart_rate_reserve_upper() });
+}
+
+test "workout format" {
+    const reserve_heart_rate = 138.0;
+    const resting_heart_rate = 49;
+    inline for (std.enums.values(WorkoutType)) |workout_type| {
+        const workout: Workout = .{ .type = workout_type, .reserve_heart_rate = reserve_heart_rate, .resting_heart_rate = resting_heart_rate };
+        switch (workout_type) {
+            .vo_two_max => try std.testing.expectFmt("VO2:\t176 - 183", "{f}", .{workout}),
+            .lactate_threshold => try std.testing.expectFmt("LT:\t153 - 170", "{f}", .{workout}),
+            .endurance => try std.testing.expectFmt("E:\t139 - 157", "{f}", .{workout}),
+            .medium_long => try std.testing.expectFmt("ML:\t140 - 157", "{f}", .{workout}),
+            .general_aerobic => try std.testing.expectFmt("GA:\t135 - 153", "{f}", .{workout}),
+            .recovery => try std.testing.expectFmt("R:\t132 - 146", "{f}", .{workout}),
+        }
+    }
 }

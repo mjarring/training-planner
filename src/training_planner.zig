@@ -22,3 +22,8 @@ test "basic maximal heart rate calculation" {
     try std.testing.expect(maximal_heart_rate_from_age(55) == 169.5);
     try std.testing.expect(maximal_heart_rate_from_age(65) == 162.5);
 }
+
+// Force the compiler to analyze Workout.zig
+test {
+    _ = Workout;
+}
