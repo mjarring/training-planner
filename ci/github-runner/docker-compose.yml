@@ -9,5 +9,12 @@ services:
       RUNNER_LABELS: github-runner
     security_opt:
       - no-new-privileges:true
+      # mja: Override the default seccomp here
+      # to allow kcov to change personality.
+      # I chose to blanket turn off syscall
+      # filtering since this runner is expected
+      # to only run on PRs pushed by me or a
+      # trusted collaborator.
+      - seccomp:unconfined
     cap_drop:
       - ALL

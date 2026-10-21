@@ -47,4 +47,24 @@ pub fn build(b: *std.Build) void {
     const test_step = b.step("test", "Run tests");
     test_step.dependOn(&run_mod_tests.step);
     test_step.dependOn(&run_cli_exe_tests.step);
+
+    const training_planner_mod_coverage_tests = b.addTest(.{
+        .root_module = training_planner_mod,
+        .use_llvm = true,
+    });
+
+    const run_mod_coverage = b.addSystemCommand(&.{
+        "kcov",
+        "--clean",
+        "--include-path=src",
+    });
+
+    const coverage_dir = run_mod_coverage.addOutputDirectoryArg("coverage");
+
+    run_mod_coverage.addArtifactArg(training_planner_mod_coverage_tests);
+
+    const coverage_install_dir = b.addInstallDirectory(.{ .source_dir = coverage_dir, .install_dir = .prefix, .install_subdir = "coverage" });
+
+    const coverage_step = b.step("coverage", "Run kcov for code coverage");
+    coverage_step.dependOn(&coverage_install_dir.step);
 }
